@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../../config/database');
+const Empleado = require('./empleado.model');
 
 const Publicacion = sequelize.define('Publicacion', {
     titulo: {

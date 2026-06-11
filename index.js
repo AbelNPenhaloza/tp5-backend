@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 });
 
 // Rutas - P1 Socios
-app.use('/api/socio', require('.src/routes/p1/socio.route'));
+app.use('/api/socio', require('./src/routes/p1/socio.route'));
 
 // Rutas - P2 Transacciones
 app.use('/api/transaccion', require('./src/routes/p2/transaccion.route'));
