@@ -28,11 +28,15 @@ const Socio = sequelize.define('Socio', {
         allowNull: false,
         unique: { msg: 'Ya existe un socio con ese DNI' },
         validate: {
-            len: { args: [7, 8], msg: 'DNI debe tener entre 7 y 8 caracteres' }
-        },
-        isNumeric: {
-            msg: 'El DNI solo puede contener numeros'
+            len: {
+                args: [7, 8],
+                msg: 'DNI debe tener entre 7 y 8 caracteres'
+            },
+            isNumeric: {
+                msg: 'El DNI solo puede contener numeros'
+            }
         }
+
     },
     numeroSocio: {
         type: DataTypes.INTEGER,
