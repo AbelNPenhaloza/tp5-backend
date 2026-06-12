@@ -25,7 +25,7 @@ socioCtrl.getSociosActivo = async (req, res) => {
             where: {activo: true },
             order: [['apellido', 'ASC']]
         });
-        res.status(200);json(socios);
+        res.status(200).json(socios);
     } catch (error) {
         res.status(400).json({
             status: '0',

@@ -39,7 +39,7 @@ app.use(( req, res ) => {
 app.set('port', process.env.PORT || 3001);
 
 // Sincronizar base de datos y arrancar servidor
-sequelize.sync({ force: true, alter: false})
+sequelize.sync({ force: false, alter: false})
     .then(() => {
         console.log('Tablas de PostgreSQL sincronizadas');
         app.listen(app.get('port'), () => {

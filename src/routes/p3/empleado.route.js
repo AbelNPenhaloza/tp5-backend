@@ -7,6 +7,6 @@ router.get('/', empleadoCtrl.getEmpleados);
 router.get('/:id', empleadoCtrl.getEmpleado);
 router.post('/', empeladoCtrl.createEmpleado);
 router.delete('/:id', empleadoCtrl.deleteEmpleado);
-router.patch('/:id', empleadoCtrl.restoreEmpleado);
+router.patch('/:id/restore', empleadoCtrl.restoreEmpleado);
 
 module.exports = router;

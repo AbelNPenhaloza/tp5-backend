@@ -11,8 +11,8 @@ const Publicacion = sequelize.define('Publicacion', {
                 msg: 'El titulo es obligatorio'
             },
             len: {
-                args: [10, 100],
-                msg: 'El titulo debe tener entre 10 y 100 caracteres'
+                args: [6, 40],
+                msg: 'El titulo debe tener entre 6 y 40 caracteres'
             }
         }
     },

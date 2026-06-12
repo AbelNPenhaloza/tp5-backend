@@ -95,11 +95,13 @@ publicacionCtrl.getPublicacionesTituloVigencia = async (req, res) => {
   try {
     const { titulo, vigencia } = req.query;
     let where = {};
+
     if (titulo) {
       where.titulo = { [Op.iLike]: `%${titulo}%` };
     }
+    
     if(vigencia !== undefined) {
-      where.vigencia = vigencia === 'true';
+      where.vigente = vigencia === 'true';
     }
 
     const publicaciones = await Publicacion.findAll({
