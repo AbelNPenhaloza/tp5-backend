@@ -107,9 +107,9 @@ PTO 3) Módulo de Empleados y Publicaciones (Relación $1:N$)
 
 Se modela la relación de cardinalidad donde un empleado puede redactar o poseer múltiples publicaciones digitales, pero una publicación pertenece estrictamente a un único empleado redactor.
 
-$$
+
 \text{Empleado} \xrightarrow{1\ :\ N} \text{Publicacion}
-$$
+
 
 Físicamente, esto se resuelve inyectando la llave foránea (empleadoId) dentro de la entidad Publicacion.
 
