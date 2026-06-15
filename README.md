@@ -345,9 +345,9 @@ Ejecuta una búsqueda combinada donde el título no requiere coincidencia exacta
 
 El motor aplica un filtrado relacional definido de la siguiente forma:
 
-$$
+
 \text{Resultado} = \left\{ p \in \text{Publicaciones} \ \middle|\ \text{p.titulo} \ \text{ILIKE} \ \%t\% \ \land \ \text{p.vigente} = b \right\}
-$$
+
 
 Instalación, Despliegue y Primeros Pasos
 
