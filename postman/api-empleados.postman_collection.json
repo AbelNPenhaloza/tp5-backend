@@ -1,0 +1,161 @@
+{
+  "info": {
+    "_postman_id": "e9bd9caa-f053-42de-93b0-bbbc6925d2d4",
+    "name": "api-empleados",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33194589"
+  },
+  "item": [
+    {
+      "name": "create-empleado",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"apellido\":\"Cachi\",\r\n    \"nombre\":\"Mariana\",\r\n    \"dni\":\"36345678\",\r\n    \"email\":\"mcachi@mail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/empleado",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "empleado"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-empleados",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"apellido\":\"Cachi\",\r\n    \"nombre\":\"Mariana\",\r\n    \"dni\":\"36345678\",\r\n    \"email\":\"mcachi@mail.com\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/empleado",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "empleado"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-empleado-by-id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"apellido\":\"Cachi\",\r\n    \"nombre\":\"Mariana\",\r\n    \"dni\":\"36345678\",\r\n    \"email\":\"mcachi@mail.com\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/empleado/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "empleado",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "soft-delete-empleado",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/empleado/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "empleado",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "restore-empleado",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/empleado/1/restore",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "empleado",
+            "1",
+            "restore"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

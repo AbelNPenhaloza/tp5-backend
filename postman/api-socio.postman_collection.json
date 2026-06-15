@@ -1,0 +1,193 @@
+{
+  "info": {
+    "_postman_id": "c6a10b6c-4e46-482d-b96b-251f8f6e2aab",
+    "name": "api-socio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33194589"
+  },
+  "item": [
+    {
+      "name": "socios",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\":\"Juan\",\r\n    \"apellido\":\"Perez\",\r\n    \"foto\":\"https://i.pravatar.cc/300\",\r\n    \"dni\":\"12345678\",\r\n    \"numeroSocio\":5,\r\n    \"activo\":true\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/socio",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "socio"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "socios-activos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/socio/activo",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "socio",
+            "activo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "crear-socio",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\":\"Juan\",\r\n    \"apellido\":\"Perez\",\r\n    \"foto\":\"https://i.pravatar.cc/300\",\r\n    \"dni\":\"12345678\",\r\n    \"numeroSocio\":5,\r\n    \"activo\":true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/socio",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "socio"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "actualizar-socio",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\": \"Facundo\",\r\n    \"apellido\": \"Alarcon\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/socio/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "socio",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "soft-delete-socio",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\": \"Facundo\",\r\n    \"apellido\": \"Alarcon\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/socio/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "socio",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "restore-socio",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\": \"Facundo\",\r\n    \"apellido\": \"Alarcon\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/socio/5/restore",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "socio",
+            "5",
+            "restore"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

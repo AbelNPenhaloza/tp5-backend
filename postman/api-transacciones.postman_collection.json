@@ -1,0 +1,122 @@
+{
+  "info": {
+    "_postman_id": "d53ec431-7f35-499c-bede-07050759faa7",
+    "name": "api-transacciones",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33194589"
+  },
+  "item": [
+    {
+      "name": "get-transacciones",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"idiomaOrigen\":\"es-español\",\r\n    \"textoOrigen\":\"Hola mundo\",\r\n    \"idiomaDestino\":\"en-english\",\r\n    \"textoDestino\":\"Hello world\",\r\n    \"emailCliente\":\"juan@mail.com\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/transaccion",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "transaccion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-transacciones",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"idiomaOrigen\":\"es-español\",\r\n    \"textoOrigen\":\"Hola mundo\",\r\n    \"idiomaDestino\":\"en-english\",\r\n    \"textoDestino\":\"Hello world\",\r\n    \"emailCliente\":\"juan@mail.com\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/transaccion",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "transaccion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-by-email",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/transaccion/email?email=juan@mail.com",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "transaccion",
+            "email"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "juan@mail.com"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-by-idioma",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/transaccion/idioma/es-español",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "transaccion",
+            "idioma",
+            "es-español"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
