@@ -4,6 +4,10 @@ const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/database');
 
+// Importamos las librerías de Swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger_output.json'); // Archivo que generará swagger.js
+
 const app = express();
 
 //Middlewares
@@ -16,6 +20,10 @@ app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 });
+
+// Ruta de la documentación interactiva de Swagger
+// Se define antes de las rutas de manejo de errores
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Rutas - P1 Socios
 app.use('/api/socio', require('./src/routes/p1/socio.route'));
@@ -44,13 +52,13 @@ sequelize.sync({ force: false, alter: false})
         console.log('Tablas de PostgreSQL sincronizadas');
         app.listen(app.get('port'), () => {
             console.log(`Servidor corriendo en http://localhost:${app.get('port')}`);
+            console.log(`Documentación de la API: http://localhost:${app.get('port')}/api/docs`);
             console.log(`Socios: http://localhost:${app.get('port')}/api/socio`);
             console.log(`Transacciones: http://localhost:${app.get('port')}/api/transaccion`);
             console.log(`Empleados: http://localhost:${app.get('port')}/api/empleado`);
             console.log(`Publicaciones: http://localhost:${app.get('port')}/api/publicacion`);
         });
-        })
-        .catch(err => {
-            console.error('Error al sincronizar: ', err);
-        })
-   
+    })
+    .catch(err => {
+        console.error('Error al sincronizar: ', err);
+    });

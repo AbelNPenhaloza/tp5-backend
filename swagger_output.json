@@ -1,0 +1,804 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API de Gestión Integrada - TP5",
+    "description": "Documentación interactiva de las APIs para Socios, Transacciones (Traducciones), Empleados y Publicaciones de la cátedra.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Socios (P1)",
+      "description": "Operaciones para dar de alta, listar, actualizar, dar de baja lógica y restaurar Socios."
+    },
+    {
+      "name": "Transacciones (P2)",
+      "description": "Registro de transacciones de traducción de idiomas y consultas por email o idioma."
+    },
+    {
+      "name": "Empleados (P3)",
+      "description": "Gestión administrativa de empleados con borrado lógico."
+    },
+    {
+      "name": "Publicaciones (P3)",
+      "description": "Publicaciones digitales de los empleados con filtros de vigencia y título."
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/socio/": {
+      "get": {
+        "tags": [
+          "Socios (P1)"
+        ],
+        "summary": "Obtener todos los socios",
+        "description": "Retorna una lista completa con todos los socios registrados en el sistema.",
+        "responses": {
+          "200": {
+            "description": "Lista de socios obtenida correctamente.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Socio"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Socios (P1)"
+        ],
+        "summary": "Crear un nuevo socio",
+        "description": "Registra un nuevo socio en el sistema con todos los datos correspondientes.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos necesarios para la creación del socio.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Socio"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Socio creado y guardado con éxito.",
+            "schema": {
+              "$ref": "#/definitions/Socio"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/socio/activo": {
+      "get": {
+        "tags": [
+          "Socios (P1)"
+        ],
+        "summary": "Obtener socios activos",
+        "description": "Filtra y retorna únicamente la lista de aquellos socios que tienen su estado activo.",
+        "responses": {
+          "200": {
+            "description": "Lista de socios activos obtenida con éxito.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Socio"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/socio/{id}": {
+      "put": {
+        "tags": [
+          "Socios (P1)"
+        ],
+        "summary": "Actualizar datos de un socio",
+        "description": "Permite la modificación parcial o total de la información de un socio usando su ID como parámetro.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID de registro del socio a actualizar"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Propiedades del socio que se desean actualizar.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SocioUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Socio actualizado correctamente.",
+            "schema": {
+              "$ref": "#/definitions/Socio"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Socios (P1)"
+        ],
+        "summary": "Desactivar un socio (Baja Lógica)",
+        "description": "Realiza un \"soft delete\" sobre el socio especificado por ID, cambiando su estado de activo a inactivo sin eliminar el registro físico.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del socio a dar de baja de manera lógica"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Socio desactivado lógicamente con éxito."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/socio/{id}/restore": {
+      "patch": {
+        "tags": [
+          "Socios (P1)"
+        ],
+        "summary": "Restaurar un socio desactivado",
+        "description": "Revierte la baja lógica (soft delete) del socio especificado por ID, devolviéndole su estado activo.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del socio a restaurar en el sistema"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Socio restaurado de manera exitosa."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/transaccion/": {
+      "get": {
+        "tags": [
+          "Transacciones (P2)"
+        ],
+        "summary": "Obtener todas las transacciones",
+        "description": "Retorna la lista completa de todas las transacciones de traducción registradas.",
+        "responses": {
+          "200": {
+            "description": "Lista de transacciones obtenida con éxito.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Transaccion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transacciones (P2)"
+        ],
+        "summary": "Registrar una nueva transacción",
+        "description": "Guarda el registro de una nueva traducción realizada por un cliente.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos de la traducción a registrar.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Transaccion"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Transacción de traducción registrada correctamente.",
+            "schema": {
+              "$ref": "#/definitions/Transaccion"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/transaccion/email": {
+      "get": {
+        "tags": [
+          "Transacciones (P2)"
+        ],
+        "summary": "Buscar transacciones por correo electrónico",
+        "description": "Filtra y devuelve las transacciones registradas que correspondan a un correo electrónico de cliente específico.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Correo electrónico del cliente a buscar (ej: juan@mail.com)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de transacciones del cliente obtenida correctamente.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Transaccion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/transaccion/idioma/{idioma}": {
+      "get": {
+        "tags": [
+          "Transacciones (P2)"
+        ],
+        "summary": "Buscar transacciones por idioma de origen",
+        "description": "Retorna las transacciones filtradas por el idioma de origen indicado en la ruta.",
+        "parameters": [
+          {
+            "name": "idioma",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Idioma de origen de la traducción (ej: es-español)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transacciones filtradas por idioma obtenidas correctamente.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Transaccion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/empleado/": {
+      "get": {
+        "tags": [
+          "Empleados (P3)"
+        ],
+        "summary": "Obtener todos los empleados",
+        "description": "Retorna un listado completo con todos los empleados registrados en el sistema.",
+        "responses": {
+          "200": {
+            "description": "Lista de empleados obtenida de forma exitosa.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Empleado"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Empleados (P3)"
+        ],
+        "summary": "Crear un nuevo empleado",
+        "description": "Registra un empleado en el sistema con sus datos de contacto y legajo básico.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Estructura de datos para dar de alta al empleado.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Empleado"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Empleado registrado exitosamente.",
+            "schema": {
+              "$ref": "#/definitions/Empleado"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/empleado/{id}": {
+      "get": {
+        "tags": [
+          "Empleados (P3)"
+        ],
+        "summary": "Obtener un empleado por ID",
+        "description": "Recupera la información detallada de un empleado específico mediante su identificador numérico.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID único del empleado que se desea consultar."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empleado encontrado con éxito.",
+            "schema": {
+              "$ref": "#/definitions/Empleado"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Empleados (P3)"
+        ],
+        "summary": "Desactivar un empleado (Baja Lógica)",
+        "description": "Aplica un estado de inhabilitación (soft delete) sobre el registro del empleado especificado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del empleado que será dado de baja lógica."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empleado dado de baja exitosamente."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/empleado/{id}/restore": {
+      "patch": {
+        "tags": [
+          "Empleados (P3)"
+        ],
+        "summary": "Restaurar un empleado inactivo",
+        "description": "Revierte la baja lógica (soft delete) de un empleado registrado, volviendo a habilitar su cuenta.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del empleado que se desea rehabilitar."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empleado reactivado con éxito."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/publicacion/": {
+      "get": {
+        "tags": [
+          "Publicaciones (P3)"
+        ],
+        "summary": "Obtener todas las publicaciones",
+        "description": "Retorna una lista con todas las publicaciones almacenadas en el sistema (activas e inactivas).",
+        "responses": {
+          "200": {
+            "description": "Lista de publicaciones obtenida correctamente.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Publicacion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Publicaciones (P3)"
+        ],
+        "summary": "Crear una nueva publicación",
+        "description": "Crea y asocia una nueva publicación digital a un empleado autor.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos necesarios para la publicación (soporta imagenAsociada en Base64).",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Publicacion"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Publicación creada y guardada con éxito.",
+            "schema": {
+              "$ref": "#/definitions/Publicacion"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/publicacion/buscar": {
+      "get": {
+        "tags": [
+          "Publicaciones (P3)"
+        ],
+        "summary": "Buscar publicaciones por título y vigencia",
+        "description": "Filtra las publicaciones utilizando un término de búsqueda en el título y/o su estado de vigencia actual.",
+        "parameters": [
+          {
+            "name": "titulo",
+            "in": "query",
+            "description": "Parte del título de la publicación a buscar (ej: título)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "vigencia",
+            "in": "query",
+            "description": "Filtro por estado de vigencia (true o false)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Publicaciones filtradas recuperadas con éxito.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Publicacion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/publicacion/{id}": {
+      "put": {
+        "tags": [
+          "Publicaciones (P3)"
+        ],
+        "summary": "Actualizar una publicación",
+        "description": "Permite modificar propiedades específicas o totales de una publicación existente mediante su ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID de la publicación a modificar."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Atributos que se desean actualizar (ej. el título).",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PublicacionUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Publicación actualizada correctamente.",
+            "schema": {
+              "$ref": "#/definitions/Publicacion"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Publicaciones (P3)"
+        ],
+        "summary": "Baja lógica de una publicación",
+        "description": "Establece de forma lógica el estado inactivo para la publicación indicada por ID (soft delete).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID de la publicación que se desea inhabilitar."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Publicación dada de baja lógicamente con éxito."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/publicacion/{id}/restore": {
+      "patch": {
+        "tags": [
+          "Publicaciones (P3)"
+        ],
+        "summary": "Restaurar una publicación inactiva",
+        "description": "Revierte el borrado lógico de una publicación, devolviéndole su vigencia u operatividad en el sistema.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID de la publicación a restaurar."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Publicación restaurada con éxito."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Socio": {
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "type": "string",
+          "example": "Juan"
+        },
+        "apellido": {
+          "type": "string",
+          "example": "Perez"
+        },
+        "foto": {
+          "type": "string",
+          "example": "https://i.pravatar.cc/300"
+        },
+        "dni": {
+          "type": "string",
+          "example": "12345678"
+        },
+        "numeroSocio": {
+          "type": "number",
+          "example": 5
+        },
+        "activo": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "SocioUpdate": {
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "type": "string",
+          "example": "Facundo"
+        },
+        "apellido": {
+          "type": "string",
+          "example": "Alarcon"
+        }
+      }
+    },
+    "Transaccion": {
+      "type": "object",
+      "properties": {
+        "idiomaOrigen": {
+          "type": "string",
+          "example": "es-español"
+        },
+        "textoOrigen": {
+          "type": "string",
+          "example": "Hola mundo"
+        },
+        "idiomaDestino": {
+          "type": "string",
+          "example": "en-english"
+        },
+        "textoDestino": {
+          "type": "string",
+          "example": "Hello world"
+        },
+        "emailCliente": {
+          "type": "string",
+          "example": "juan@mail.com"
+        }
+      }
+    },
+    "Empleado": {
+      "type": "object",
+      "properties": {
+        "apellido": {
+          "type": "string",
+          "example": "Cachi"
+        },
+        "nombre": {
+          "type": "string",
+          "example": "Mariana"
+        },
+        "dni": {
+          "type": "string",
+          "example": "36345678"
+        },
+        "email": {
+          "type": "string",
+          "example": "mcachi@mail.com"
+        }
+      }
+    },
+    "Publicacion": {
+      "type": "object",
+      "properties": {
+        "titulo": {
+          "type": "string",
+          "example": "Mi título 2"
+        },
+        "contenido": {
+          "type": "string",
+          "example": "Las sociedades en la era de la IA"
+        },
+        "imagenAsociada": {
+          "type": "string",
+          "example": "base64..."
+        },
+        "fechaPublicacion": {
+          "type": "string",
+          "example": "2026-03-12"
+        },
+        "empleadoId": {
+          "type": "number",
+          "example": 2
+        },
+        "vigente": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "PublicacionUpdate": {
+      "type": "object",
+      "properties": {
+        "titulo": {
+          "type": "string",
+          "example": "Nuevo Titulo"
+        }
+      }
+    }
+  }
+}
