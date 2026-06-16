@@ -34,23 +34,40 @@ router.get('/email', (req, res) => {
     transaccionCtrl.getTransaccionesEmail(req, res);
 });
 
-// GET /api/transaccion/idioma/:idioma
-router.get('/idioma/:idioma', (req, res) => {
+// GET /api/transaccion/filtrar/origen/:origen/destino/:destino
+router.get('/filtrar/origen/:origen/destino/:destino', (req, res) => {
     /* #swagger.tags = ['Transacciones (P2)']
-       #swagger.summary = 'Buscar transacciones por idioma de origen'
-       #swagger.description = 'Retorna las transacciones filtradas por el idioma de origen indicado en la ruta.'
-       #swagger.parameters['idioma'] = {
+       #swagger.summary = 'Buscar transacciones por idioma de origen y destino'
+       #swagger.description = 'Retorna las transacciones filtradas por los idiomas de origen y destino indicados en la ruta.'
+
+       #swagger.parameters['origen'] = {
            in: 'path',
            description: 'Idioma de origen de la traducción (ej: es-español)',
            required: true,
            type: 'string'
        }
+
+       #swagger.parameters['destino'] = {
+           in: 'path',
+           description: 'Idioma de destino de la traducción (ej: en-inglés)',
+           required: true,
+           type: 'string'
+       }
+
        #swagger.responses[200] = {
-           description: 'Transacciones filtradas por idioma obtenidas correctamente.',
+           description: 'Transacciones filtradas por idioma de origen y destino obtenidas correctamente.',
            schema: [{ $ref: '#/definitions/Transaccion' }]
        }
+
+       #swagger.responses[404] = {
+           description: 'No se encontraron transacciones para los idiomas especificados.'
+       }
+
+       #swagger.responses[500] = {
+           description: 'Error interno del servidor.'
+       }
     */
-    transaccionCtrl.getTransaccionesIdioma(req, res);
+    transaccionCtrl.getTransaccionesOrigenDestinoParams(req, res);
 });
 
 // POST /api/transaccion

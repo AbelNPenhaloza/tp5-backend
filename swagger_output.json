@@ -297,25 +297,32 @@
         }
       }
     },
-    "/api/transaccion/idioma/{idioma}": {
+    "/api/transaccion/filtrar/origen/{origen}/destino/{destino}": {
       "get": {
         "tags": [
           "Transacciones (P2)"
         ],
-        "summary": "Buscar transacciones por idioma de origen",
-        "description": "Retorna las transacciones filtradas por el idioma de origen indicado en la ruta.",
+        "summary": "Buscar transacciones por idioma de origen y destino",
+        "description": "Retorna las transacciones filtradas por los idiomas de origen y destino indicados en la ruta.",
         "parameters": [
           {
-            "name": "idioma",
+            "name": "origen",
             "in": "path",
             "required": true,
             "type": "string",
             "description": "Idioma de origen de la traducción (ej: es-español)"
+          },
+          {
+            "name": "destino",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Idioma de destino de la traducción (ej: en-inglés)"
           }
         ],
         "responses": {
           "200": {
-            "description": "Transacciones filtradas por idioma obtenidas correctamente.",
+            "description": "Transacciones filtradas por idioma de origen y destino obtenidas correctamente.",
             "schema": {
               "type": "array",
               "items": {
@@ -328,6 +335,12 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "No se encontraron transacciones para los idiomas especificados."
+          },
+          "500": {
+            "description": "Error interno del servidor."
           }
         }
       }

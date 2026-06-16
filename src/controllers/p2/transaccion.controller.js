@@ -62,16 +62,14 @@ transaccionCtrl.getTransaccionesEmail = async (req, res) => {
 };
 
 // Obtener transacciones por idioma (origen o destino)
-transaccionCtrl.getTransaccionesIdioma = async (req, res) => {
+transaccionCtrl.getTransaccionesOrigenDestinoParams = async (req, res) => {
     try {
-        const { idioma } = req.params;
+        const { idioma, destino } = req.params;
         
         const transacciones = await Transaccion.findAll({
             where: {
-                [Op.or]: [
-                    { idiomaOrigen: idioma },
-                    { idiomaDestino: idioma }
-                ]
+                idiomaOrigen: idioma,
+                idiomaDestino: destino                
             },
             order: [['createdAt', 'DESC']]
         });
@@ -80,7 +78,8 @@ transaccionCtrl.getTransaccionesIdioma = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             status: '0',
-            msg: 'Error al obtener transacciones por idioma'
+            msg: 'Error al obtener transacciones por origen y destino',
+            error: error.message
         });
     }
 };
