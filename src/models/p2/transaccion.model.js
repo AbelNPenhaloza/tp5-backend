@@ -21,7 +21,6 @@ const Transaccion = sequelize.define('Transaccion', {
     emailCliente: {
         type: DataTypes.STRING,
         allowNull: false,
-        //unique: { msg: 'Ya existe un cliente con ese Email' },
         validate: {
             isEmail: { msg: 'Email invalido' }
         }

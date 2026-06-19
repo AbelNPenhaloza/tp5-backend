@@ -13,9 +13,14 @@ transaccionCtrl.createTransaccion = async (req, res) => {
             data: nuevaTransaccion
         });
     } catch (error) {
+        console.log('ERROR COMPLETO:', error);  // ← Agrega esto
+        console.log('ERROR MESSAGE:', error.message);  // ← Agrega esto
+        console.log('ERROR DETAILS:', error.errors);  // ← Agrega esto
         res.status(400).json({
             status: '0',
-            msg: 'Error al crear la transacción'
+            msg: 'Error al crear la transacción',
+            error: error.message,
+            details: error.errors
         });
     }
 };
@@ -64,11 +69,11 @@ transaccionCtrl.getTransaccionesEmail = async (req, res) => {
 // Obtener transacciones por idioma (origen o destino)
 transaccionCtrl.getTransaccionesOrigenDestinoParams = async (req, res) => {
     try {
-        const { idioma, destino } = req.params;
+        const { origen, destino } = req.params;
         
         const transacciones = await Transaccion.findAll({
             where: {
-                idiomaOrigen: idioma,
+                idiomaOrigen: origen,
                 idiomaDestino: destino                
             },
             order: [['createdAt', 'DESC']]
